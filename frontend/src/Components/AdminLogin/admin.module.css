@@ -1,0 +1,65 @@
+.admin_page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.container{
+    @apply md:w-[28%];
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: 55vh;
+    padding: 1rem 2rem 2rem 2rem;
+    box-shadow: 0 7px 30px -10px rgba(150,170,180,0.5);
+    border-radius: 6px;
+    
+}
+
+.admin_login_h1{
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+}
+
+.admin_login_form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.admin_login_form label{
+    margin-top: 0.6rem;
+    font-weight: 500;
+    color: rgba(20, 20, 20, 0.727);
+    letter-spacing: 1px;
+}
+
+.admin_login_input{
+    border: 0.7px solid #04040463;
+    border-radius: 4.5px;
+    padding: 4px 7px;
+    height: 34px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.admin_login_btn{
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+    text-align: center;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    border-radius: 6px;
+    height: 2.3rem;
+    margin-top: 1.6rem;
+}
+
+
+.error_message{
+    line-height: 0.3cm;
+    display: none;
+}
