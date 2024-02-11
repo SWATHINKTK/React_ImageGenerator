@@ -1,0 +1,149 @@
+.login_page{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    @apply sm:items-center
+}
+
+/* .login_page::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-image: url('../../../public/Images/BG2.jpg');
+    backdrop-filter: blur(10px);
+    filter: blur(4px);
+    mix-blend-mode: lighten; 
+} */
+
+.container{
+    @apply sm:flex;
+    @apply w-full;
+    @apply md:w-7/12;
+    z-index: 1;
+    border-radius: 6px;
+    height: 80vh;
+    box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
+}
+
+.left_container{
+    @apply md:w-5/12;
+    object-fit: contain;
+}
+
+.left_container img{
+    width: 100%;
+    height:100%;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+
+.right_container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 3rem;
+    max-height: 100%;
+}
+
+
+
+
+.right_container h2{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.right_container p{
+    margin: 10px 0;
+    font-weight: 400;
+}
+
+.login_form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.right_container label{
+    margin: 10px 0 1px 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+
+.login_form input{
+    border: 0.7px solid #04040463;
+    border-radius: 4.5px;
+    padding: 4px 10px;
+    height: 36px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.login_form input:focus {
+    outline: 2px solid #007bff; /* Set the color of the outline when the input is focused */
+}
+
+.login_btn{
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+    text-align: center;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    border-radius: 6px;
+    height: 2.3rem;
+    margin: 20px 0;
+}
+
+.login_btn:hover{
+    transform: translatey(3px);
+}
+
+.signup_btn {
+    margin-top: 20px;
+  font-size: 15px;
+  color: #222;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+
+.signup_btn:focus,
+.signup_btn:hover {
+  color: #222;
+}
+
+.signup_btn:focus:after,
+.signup_btn:hover:after {
+  width: 100%;
+  left: 0%;
+}
+
+.signup_btn:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: rgb(19, 19, 19);
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
