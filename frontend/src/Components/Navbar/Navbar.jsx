@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './navbar.css';
 
 
-function Navbar() {
+function    Navbar() {
 
     const [ profileToggle, setProfileToggle ] = useState(true);
 
@@ -75,4 +75,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default Navbar;

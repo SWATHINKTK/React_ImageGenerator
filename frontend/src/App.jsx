@@ -1,18 +1,10 @@
-import AdminLogin from './Components/AdminLogin/AdminLogin'
-import Navbar from './Components/Navbar/Navbar'
-import Login from './Components/login/Login'
-import Register from './Components/register/Register'
-import UserView from './Components/userView/UserView'
+import Navbar from "./Components/Navbar/Navbar.jsx"
 
 function App() {
 
   return (
     <>
-      {/* <Login />
-      <Register /> */}
-      {/* <AdminLogin/> */}
-      <Navbar/>
-      <UserView />
+     <Navbar /> 
     </>
   )
 }

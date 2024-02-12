@@ -1,7 +1,68 @@
-.user_table{
-    @apply mx-auto;
-    @apply my-auto;
-    margin-top: 5%;
-    border:  1px solid #000;
-
+.user_page{
+    @apply mx-auto  w-10/12;
+    margin-top: 3%;
 }
+
+.user_table{
+    @apply shadow-md sm:rounded-md;
+    overflow-x: auto;
+}
+
+.heading{
+    @apply text-black font-[800] tracking-[2px];
+    font-size: 1.6rem;
+    padding: 0.3rem 0;
+    text-transform: uppercase;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.table{
+    width: 100%;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.table_body{
+    background-color: #FFFAF4;
+}
+
+
+.table_heading{
+    @apply py-3 px-5;
+    letter-spacing: 1px;
+    font-size: 1.01rem;
+    background-color: #4C4C6D;
+    color: #fff;
+}
+
+.table_data{
+    @apply py-3 px-5;
+}
+
+
+
+.profile_img{
+    @apply mx-auto;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    height: 4rem;
+    width: 4rem;
+    background-image: url("../../../public/images/hhh.jpg");
+    background-size: cover;
+}
+
+
+
+
+/* .block_status{
+    @apply absolute -top-10 left-[50%] -translate-x-[50%]  z-20 origin-left scale-0 px-3 rounded-lg border  border-gray-300 bg-white py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100;
+} */
+
+/* .block_btn{
+    @apply relative py-1 px-8 text-black text-base font-bold overflow-hidden bg-green-300 rounded-full transition-all  ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-red-500 before:to-red-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-full hover:before:left-0;
+     <td className={`${style.table_data} px-0`}>
+                                <button className={style.block_btn}>
+                                    Block!
+                                </button>
+                        </td> 
+} */
