@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+
 import './navbar.css';
 
 
-function    Navbar() {
+const Navbar = () => {
 
     const [ profileToggle, setProfileToggle ] = useState(true);
 

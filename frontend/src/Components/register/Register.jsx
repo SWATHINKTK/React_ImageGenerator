@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './register.module.css';
 
-function Register() {
+const Register = () => {
   return (
     <div className={style.register_page}>
       <div className={style.container}>

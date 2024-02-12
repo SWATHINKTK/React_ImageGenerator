@@ -4,7 +4,7 @@ import { FaUserEdit } from "react-icons/fa";
 
 import style from './userview.module.css';
 
-function UserView() {
+const UserView = () => {
 
     // const [modalIsOpen, setIsOpen] = useState(false);
 
