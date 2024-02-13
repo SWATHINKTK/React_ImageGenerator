@@ -40,8 +40,6 @@ const registerUser = async(req, res, next) => {
             res.json({success:false, message:"Registration Failed,Try Again."});
         }
         
-
-
     } catch (error) {
         next(error);
     }
@@ -61,13 +59,11 @@ const loginUser = async(req, res, next) => {
             res.status(400).json({success:false, message:"Check Username and Password"});
         }
 
-        console.log(process.env.JWT_SECRET)
 
         const token = jwt.sign({id:existingUser._id}, process.env.JWT_SECRET,{
             expiresIn:'1d'
         })
 
-        console.log(token)
         res.status(201).cookie('token',token,{
             maxAge: 86400000, 
             secure: true,
@@ -86,7 +82,7 @@ const loginUser = async(req, res, next) => {
 
 const logoutUser = async(req, res, next) => {
     try {
-        res.status(200).clearCookie('token').json({message: 'User is Logged out.'}) 
+        res.status(200).clearCookie('token').json({message: 'User is Logged out.'});
     } catch (error) {
         next(error);
     }

@@ -16,7 +16,7 @@ userRouter.post('/register',registerUser);
 userRouter.post('/login',loginUser);
 userRouter.post('/logout', userAuthentication,logoutUser);
 userRouter.get('/profile', userAuthentication, getUserProfile);
-userRouter.post('/edituser', userAuthentication, updateUserData);
+userRouter.put('/edituser', userAuthentication, updateUserData);
 
 userRouter.get('/user',(req,res) => {
     res.json({'message':'user'})

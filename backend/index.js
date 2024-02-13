@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended:true}));
 // Router Config
 import adminRouter from "./routers/adminRouter.js";
 import userRouter from "./routers/userRouter.js";
-app.use('/api', adminRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api', userRouter);
 
 

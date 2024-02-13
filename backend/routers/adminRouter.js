@@ -1,14 +1,18 @@
 import express from "express";
-import {admin} from "../controllers/adminController.js";
 const adminRouter = express();
 
+import { 
+    loginAdmin,
+    addUser,
+    editUser,
+    userDelete,
+    logoutAdmin
+ } from "../controllers/adminController.js";
 
-adminRouter.get('/admin',(req,res) => {
-    res.json({user:'sucesss'});
-})
-
-adminRouter.get('/ad',admin)
-
-
+ adminRouter.post('/login',loginAdmin);
+ adminRouter.post('/logout',logoutAdmin);
+ adminRouter.post('/adduser',addUser);
+ adminRouter.put('/edituser',editUser);
+ adminRouter.delete('/deleteuser',userDelete);
 
 export default adminRouter;
