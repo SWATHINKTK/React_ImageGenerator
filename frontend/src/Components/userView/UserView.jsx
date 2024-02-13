@@ -79,17 +79,9 @@ const UserView = () => {
                                 7994546435
                             </td>
                             <td className={style.table_data}>
-                                <div className="group relative">
-                                    <button>
-                                        Delete 
-                                    </button>
-                                    <span className={`absolute -top-10 left-[50%] -translate-x-[50%] 
-                                    z-20 origin-left scale-0 px-3 rounded-lg border 
-                                    border-gray-300 bg-white py-2 text-sm font-bold
-                                    shadow-md transition-all duration-300 ease-in-out 
-                                    group-hover:scale-100 cursor-pointer`}>Delete<span>
-                                    </span></span>
-                                </div>
+                                <button className={style.block_btn}>
+                                    Block!
+                                </button>
                             </td>
                             <td className={style.table_data}>
                                 <button className={style.edit_btn}>

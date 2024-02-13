@@ -5,6 +5,7 @@ import AdminLogin from "./Components/adminLogin/AdminLogin.jsx"
 import UserView from "./Components/userView/UserView.jsx"
 import AdminDashBoard from "./Pages/AdminDashBoard.jsx"
 import UserProfile from "./Pages/UserProfile.jsx"
+import EditUser from "./Components/editUser/EditUser.jsx"
 
 
 
@@ -15,10 +16,11 @@ function App() {
      {/* <Login/> */}
       {/* <Navbar/>
       <UserProfile/> */}
-      {/* <AdminLogin/>
-      <UserView></UserView> */}
+      {/* <AdminLogin/> */}
+      {/* <UserView></UserView> */}
       {/* <AdminDashBoard /> */}
-      <UserProfile/>
+      {/* <UserProfile/> */}
+      <EditUser />
     </>
   )
 }
