@@ -6,6 +6,7 @@ import UserView from "./Components/userView/UserView.jsx"
 import AdminDashBoard from "./Pages/AdminDashBoard.jsx"
 import UserProfile from "./Pages/UserProfile.jsx"
 import EditUser from "./Components/editUser/EditUser.jsx"
+import Register from "./Components/register/Register.jsx"
 
 
 
@@ -14,13 +15,14 @@ function App() {
   return (
     <>
      {/* <Login/> */}
+     <Register />
       {/* <Navbar/>
       <UserProfile/> */}
       {/* <AdminLogin/> */}
       {/* <UserView></UserView> */}
       {/* <AdminDashBoard /> */}
       {/* <UserProfile/> */}
-      <EditUser />
+      {/* <EditUser /> */}
     </>
   )
 }

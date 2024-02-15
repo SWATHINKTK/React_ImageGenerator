@@ -21,20 +21,16 @@
 } */
 
 .container{
-    @apply sm:flex;
-    @apply w-full;
-    @apply md:w-7/12;
+    @apply sm:flex xl:h-[88vh] w-full md:w-7/12;
     z-index: 1;
     border-radius: 6px;
-    max-height: 85vh;
     box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
 }
 
 
 
 .left_container{
-    @apply md:w-5/12;
-    object-fit: contain;
+    @apply md:w-5/12 ;
 }
 
 .left_container img{
@@ -48,6 +44,7 @@
 .right_container{
     position: relative;
     display: flex;
+    justify-content: space-around;
     flex-direction: column;
     padding: 1.5rem 3rem;
     height: 100%;
@@ -82,7 +79,7 @@
 }
 
 
-.register_form input{
+.register_input{
     border: 0.7px solid #04040463;
     border-radius: 4.5px;
     padding: 4px 7px;
@@ -92,9 +89,24 @@
     background-color: #fff;
 }
 
-.register_form input:focus {
-    outline: 2px solid #176b58; /* Set the color of the outline when the input is focused */
+.register_input:focus {
+    outline: 2px solid #176b58; 
 }
+
+.register_error_input{
+    border: 0.7px solid #e71b1b;
+    border-radius: 4.5px;
+    padding: 4px 7px;
+    height: 34px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.register_error_input:focus{
+    outline: 1.5px solid #e71b1b; 
+}
+
 
 .register_btn{
     font-weight: 500;
@@ -113,9 +125,9 @@
 }
 
 .error_message{
-    line-height: 0.6;
-    padding-left: 5px;
-    margin-bottom: 1px;
-    color: rgb(255, 0, 0);
-    font-size: 15px;
+    line-height: 1;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #df1c1c;
+    letter-spacing: 0.8px;
 }

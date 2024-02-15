@@ -17,25 +17,21 @@ const loginAdmin = async( req, res, next ) => {
         if(!(existingAdmin && await bcrypt.compare( password, existingAdmin.password ))){
             res.status(400).json({success:false, message:"Check Username and Password"});
         }
-        
-        const users = await userModel.find({});
 
 
         const token = jwt.sign({id:existingAdmin._id}, process.env.JWT_SECRET,{
             expiresIn:'1d'
         })
 
-        if(users){
-            res.status(201).cookie('adminToken',token,{
-                maxAge: 86400000, 
-                secure: true,
-                httpOnly: true,
-                sameSite: 'strict'
-            }).json({
-                success:true,
-                usersData:users
-            })
-        }
+        res.status(201).cookie('adminToken',token,{
+            maxAge: 86400000, 
+            secure: true,
+            httpOnly: true,
+            sameSite: 'strict'
+        }).json({
+            success:true,
+            message:'Admin Logged in'
+        })
 
     } catch (error) {
         next(error)

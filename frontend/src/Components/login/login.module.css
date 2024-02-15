@@ -78,7 +78,7 @@
 }
 
 
-.login_form input{
+.login_input{
     border: 0.7px solid #04040463;
     border-radius: 4.5px;
     padding: 4px 10px;
@@ -88,8 +88,30 @@
     background-color: #fff;
 }
 
-.login_form input:focus {
-    outline: 2px solid #176b58; /* Set the color of the outline when the input is focused */
+.error_input{
+    border: 1.4px solid #d30b0b;
+    border-radius: 4.5px;
+    padding: 4px 10px;
+    height: 36px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.error_input:focus{
+    outline: 1px solid #d30b0b; 
+}
+
+.error{
+    line-height: 0.7;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #df1c1c;
+    letter-spacing: 0.8px;
+}
+
+.login_input:focus {
+    outline: 2px solid #176b58; 
 }
 
 .login_btn{

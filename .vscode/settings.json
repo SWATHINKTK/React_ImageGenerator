@@ -4,6 +4,10 @@
         "deleteuser",
         "edituser",
         "firstname",
-        "lastname"
+        "INTIAL",
+        "lastname",
+        "phonenumber",
+        "signup",
+        "toastify"
     ]
 }
