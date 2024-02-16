@@ -39,11 +39,29 @@
 .admin_login_input{
     border: 0.7px solid #04040463;
     border-radius: 4.5px;
-    padding: 4px 7px;
-    height: 34px;
+    padding: 4px 10px;
+    height: 36px;
     margin: 2px 0;
     font-size: 1.1rem;
     background-color: #fff;
+}
+
+.admin_login_input:focus{
+    outline: 2px solid #176b58; 
+}
+
+.input_error {
+    border: 1.4px solid #d30b0b;
+    border-radius: 4.5px;
+    padding: 4px 10px;
+    height: 36px;
+    margin: 3.5px 0px;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.input_error:focus{
+    outline: 1px solid #d30b0b; 
 }
 
 .admin_login_btn{
@@ -60,6 +78,9 @@
 
 
 .error_message{
-    line-height: 0.3cm;
-    display: none;
+    line-height: 0.7;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #df1c1c;
+    letter-spacing: 0.8px;
 }

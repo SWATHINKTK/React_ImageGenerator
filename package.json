@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "frontend":"cd frontend && npm run dev",
-    "backend":"cd backend && npm start",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm start",
     "start": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
     "concurrently": "^8.2.2"
   }
 }

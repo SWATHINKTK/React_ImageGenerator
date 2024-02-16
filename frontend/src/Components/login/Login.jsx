@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { userAuth } from '../../features/user/useSlice';
 import validateData from './validate';
 import style from './login.module.css';
 
@@ -14,6 +15,21 @@ const Login = () => {
 
     const [loginData, setLoginData] = useState(INTIAL_STATE);
     const [errors, setErrors] = useState(INTIAL_STATE);
+    const { success, error, user, message } = useSelector((state) =>  state.user);
+    const dispatch = useDispatch();
+    // console.log(success,error,user,message)
+    console.log(user)
+
+   
+    useEffect(() => {
+        if(error){
+            toast.error(message);
+            setErrors({
+                ...error,
+                password:'password does not match!'
+            })
+        }
+    },[error])
 
     const handleChange = (e) =>{
         const { name , value} = e.target;
@@ -22,22 +38,17 @@ const Login = () => {
     }
     
 
+
     const handleLogin = (e) =>{
         e.preventDefault();
         const { username, password } = loginData;
-        const isFormValid = Object.values(errors).every(error => error === '' && username && password)
+        const isFormValid = Object.values(errors).every(error => error === '' && username && password);
         
         if(!isFormValid){
-            toast.error('Enter Valid Data to Login !', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+            toast.error('Enter Valid Data to Login !');
+        }else{
+            console.log(loginData)
+            dispatch(userAuth(loginData))
         }
     }
 
@@ -67,7 +78,6 @@ const Login = () => {
                         <button className={style.signup_btn}>Create New Account</button>
                     </div>
             </div>
-            <ToastContainer />
         </div>
     )
 }

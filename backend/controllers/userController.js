@@ -12,52 +12,60 @@ const passwordHash = async(password) => {
 
 const registerUser = async(req, res, next) => {
     try {
-        const {firstname, lastname, email, phoneNumber, password } = req.body;
+        const { firstname, lastname, email, phoneNumber, password } = req.body;
         
-        if( !(firstname, lastname, email, phoneNumber, password) ){
-            res.status(400).json({success: false, message:"Must Required All Fields."});
+        if (!(firstname && lastname && email && phoneNumber && password)) {
+            return res.status(400).json({ success: false, message: "All fields are required." });
         }
         
-        const existingUser = await userModel.findOne({email:email});
-        if(existingUser){
-            res.status(409).json({success: false, message:"Already Existing User."})
+        const existingUser = await userModel.findOne({ email: email });
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: "Email already registered." });
         }
 
         const securePassword = await passwordHash(password);
 
-        const user = await userModel.create({
+        const user = new userModel({
             firstname,
             lastname,
             email,
             phoneNumber,
-            password:securePassword
-        })
-
+            password: securePassword
+        });
         
-        if(user){
-            res.json({success:true, message:"User Registered Sucessfully."});
-        }else{
-            res.json({success:false, message:"Registration Failed,Try Again."});
+        const savedUser = await user.save();
+
+        if (savedUser) {
+            return res.json({ success: true, message: "User registered successfully." });
+        } else {
+            throw new Error("Registration failed, please try again.");
         }
         
     } catch (error) {
+        console.log(error)
         next(error);
     }
 }
 
+
 const loginUser = async(req, res, next) => {
     try {
         const {username, password} = req.body;
+        console.log(req.body)
 
         if(!(username && password)){
             res.status(400).json({success:false, message:"Must Requires Username and Password"});
+            return;
         }
 
         const existingUser = await userModel.findOne({email:username});
 
         if(!(existingUser && await bcrypt.compare(password, existingUser.password))){
             res.status(400).json({success:false, message:"Check Username and Password"});
+            return;
         }
+        
+        existingUser.password = null;
 
 
         const token = jwt.sign({id:existingUser._id}, process.env.JWT_SECRET,{

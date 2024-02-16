@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import validateRegister from './validateRegister';
 import style from './register.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../features/user/registerUserSlice';
 
 const INTIAL_STATE = {
     firstname:'',
@@ -18,7 +20,23 @@ const Register = () => {
     const [ registerData, setRegisterData ] = useState(INTIAL_STATE);
     const [ errors, setErrors ] = useState(INTIAL_STATE);
 
+    const { success, message, error } = useSelector((state) => state.register);
+    const dispatch = useDispatch();
+
     const { firstname, lastname, email, phoneNumber, password } = registerData;
+
+    useEffect(() => {
+        if(error){
+            toast.error(message);
+            setErrors({
+                ...error,
+                email:'user is already exist'
+            })
+        }else if(success){
+            toast.success(message);
+        }
+    },[error,success]);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,12 +47,12 @@ const Register = () => {
         validateRegister(name, value, errors, setErrors)
     }
 
+    
 
     const handleRegister = async(e) => {
         e.preventDefault();
 
         const { firstname, lastname, email, phoneNumber, password } = registerData;
-
         const isFormValid = Object.values(errors).every(error => error == '' && firstname && lastname && email && phoneNumber && password);
         
         if(!isFormValid){
@@ -49,6 +67,9 @@ const Register = () => {
                 theme: "colored",
             });
             return;
+        }else{
+            dispatch(registerUser(registerData));
+
         }
     }
     
