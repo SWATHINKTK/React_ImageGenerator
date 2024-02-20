@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import validateRegister from './validateRegister';
 import style from './register.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../features/user/registerUserSlice';
+import { clear, registerUser } from '../../features/user/registerUserSlice';
+import { useNavigate } from 'react-router-dom';
 
 const INTIAL_STATE = {
     firstname:'',
@@ -23,6 +24,8 @@ const Register = () => {
     const { success, message, error } = useSelector((state) => state.register);
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     const { firstname, lastname, email, phoneNumber, password } = registerData;
 
     useEffect(() => {
@@ -34,6 +37,11 @@ const Register = () => {
             })
         }else if(success){
             toast.success(message);
+            dispatch(clear());
+            setTimeout(() => {
+                navigate('/login');
+            },3000)
+            
         }
     },[error,success]);
 
@@ -58,7 +66,7 @@ const Register = () => {
         if(!isFormValid){
             toast.error('Enter All Fields to Register !', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 2500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -109,6 +117,8 @@ const Register = () => {
 
 
                         <button className={style.register_btn}>Register</button>
+
+                        <h5 className='text-sm text-gray-800'>Already have an Account ? <span className='font-[700] cursor-pointer text-md tracking-wider' onClick={() => navigate('/login')}>Login</span></h5>
                     </form>
                     
                 </div>

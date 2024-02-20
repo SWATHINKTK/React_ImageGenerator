@@ -3,20 +3,21 @@ import { adminLogin } from "../../api/adminAPI";
 
 
 const INITIAL_STATE = {
-    admin:null,
+    admin: localStorage.getItem('adminAuth') || false,
     loading:null,
     error:null,
+    message:null,
     success:null
 
 }
 
 export const adminAuth = createAsyncThunk(
     'admin/login',
-    async( { rejectWithValue } ) => {
+    async( adminCredential, { rejectWithValue } ) => {
         try {
-            return await adminLogin();
+            return await adminLogin(adminCredential);
         } catch (error) {
-            rejectWithValue(error.response.message)
+            return rejectWithValue(error.response.data)
         }
     }
 )
@@ -26,7 +27,19 @@ const adminAuthSlice= createSlice({
     initialState:INITIAL_STATE,
     reducers:{},
     extraReducers:(builder) => {
-        // builder.addCase()
+        builder.addCase(adminAuth.fulfilled, (state, action) => {
+            console.log('fsfslsjlfaj')
+            localStorage.setItem('adminAuth',true);
+            state.error = null;
+            state.message = null;
+            state.admin = true;
+        })
+
+        builder.addCase(adminAuth.rejected , (state, action) => {
+            console.log("rttyy",action.payload)
+            state.error = true;
+            state.message = action.payload.message;
+        })
     }
 })
 

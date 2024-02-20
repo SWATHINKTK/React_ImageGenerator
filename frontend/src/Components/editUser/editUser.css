@@ -1,0 +1,39 @@
+.edit-user{
+    @apply px-5;
+}
+
+.edit-user h6{
+    margin-top: 9px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    margin-left: 2px;
+    color: rgba(0, 0, 0, .7)
+}
+
+.edit-user-input{
+    @apply w-11/12;
+    border-radius: 4.5px;
+    padding: 2px 10px;
+    font-size: 1rem;
+    background-color: #F1F6F9;
+    box-shadow: 0 7px 15px 0 rgba(0, 0, 0, .13), 0 1px 4px 0 rgba(0, 0, 0, .11);
+    outline: none;
+}
+
+.error-input{
+    border: 0.7px solid #04040463;
+    border-radius: 4.5px;
+    padding: 1px 10px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.error-edituser{
+    line-height: 0.7;
+    padding-left: 6px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #df1c1c;
+    letter-spacing: 0.8px;
+}

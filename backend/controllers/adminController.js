@@ -8,14 +8,15 @@ import userModel from "../models/userModel.js";
 const loginAdmin = async( req, res, next ) => {
     try {
         const { username, password } = req.body;
+        console.log(req.body,username,password)
 
         if(!(username && password)){
-            res.status(400).json({success:false, message:"Must Requires Username and Password"});
+            return res.status(400).json({success:false, message:"Must Requires Username and Password"});
         }
 
         const existingAdmin = await adminModel.findOne({username});
         if(!(existingAdmin && await bcrypt.compare( password, existingAdmin.password ))){
-            res.status(400).json({success:false, message:"Check Username and Password"});
+            return res.status(400).json({success:false, message:"Check Username and Password"});
         }
 
 
@@ -24,7 +25,7 @@ const loginAdmin = async( req, res, next ) => {
         })
 
         res.status(201).cookie('adminToken',token,{
-            maxAge: 86400000, 
+            maxAge: 864000, 
             secure: true,
             httpOnly: true,
             sameSite: 'strict'
@@ -43,6 +44,16 @@ const logoutAdmin = async( req, res, next ) => {
         res.status(200).clearCookie('adminToken').json({message: 'Admin is Logged out.'});
     } catch (error) {
         next(error);
+    }
+}
+
+const authorization = async( req, res, next) => {
+    try {
+        if(req.cookies.adminToken){
+            res.status(200).json({success:true});
+        }
+    } catch (error) {
+       next(error); 
     }
 }
 
@@ -133,6 +144,7 @@ const userDelete = async( req, res, next ) => {
 export {
     loginAdmin,
     logoutAdmin,
+    authorization,
     addUser,
     editUser,
     userDelete

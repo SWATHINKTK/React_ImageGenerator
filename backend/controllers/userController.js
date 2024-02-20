@@ -30,6 +30,7 @@ const registerUser = async(req, res, next) => {
             lastname,
             email,
             phoneNumber,
+            profile:'1708351341803-user.png',
             password: securePassword
         });
         
@@ -51,7 +52,6 @@ const registerUser = async(req, res, next) => {
 const loginUser = async(req, res, next) => {
     try {
         const {username, password} = req.body;
-        console.log(req.body)
 
         if(!(username && password)){
             res.status(400).json({success:false, message:"Must Requires Username and Password"});
@@ -72,7 +72,7 @@ const loginUser = async(req, res, next) => {
             expiresIn:'1d'
         })
 
-        res.status(201).cookie('token',token,{
+        res.status(201).cookie('userToken',token,{
             maxAge: 86400000, 
             secure: true,
             httpOnly: true,
@@ -90,7 +90,8 @@ const loginUser = async(req, res, next) => {
 
 const logoutUser = async(req, res, next) => {
     try {
-        res.status(200).clearCookie('token').json({message: 'User is Logged out.'});
+        console.log('user logout')
+        res.status(200).clearCookie('userToken').json({success:true, message: 'User is Logged out.'});
     } catch (error) {
         next(error);
     }
@@ -125,8 +126,8 @@ const updateUserData = async(req, res, next) => {
         const {firstname, lastname, phoneNumber} = req.body;
         const userID = req.user;
         
-        if( !(firstname, lastname, phoneNumber) ){
-            res.status(400).json({success: false, message:"Must Required All Fields."});
+        if( !(firstname && lastname && phoneNumber) ){
+            return res.status(400).json({success: false, message:"Must Required All Fields."});
         }
         
         const query = { _id: userID };
@@ -134,14 +135,35 @@ const updateUserData = async(req, res, next) => {
         const options = { returnOriginal: false };
 
         const userData = await userModel.findOneAndUpdate(query, update, options);
+        userData.password = null;
 
         if(!userData){
             const error = new Error('User Not Found.');
             error.statusCode = 404;
             next(error); 
+        }else{
+            res.json({status:true,user:userData});
         }
      
-        res.json({status:true,user:userData});
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+const profilePictureUpdate = async(req, res, next) => {
+    try {
+        const userID = req.user;
+        console.log(userID)
+
+        const query = { _id: userID };
+        const update = { $set: {profile: req.file.filename} };
+        const options = { returnOriginal: false, upsert:true };
+        const userData = await userModel.findOneAndUpdate(query, update, options);
+      
+        if(userData){
+            res.status(200).json({success:true,user:userData})
+        }
 
     } catch (error) {
         next(error);
@@ -155,5 +177,6 @@ export {
     logoutUser,
     getUserProfile,
     updateUserProfile,
-    updateUserData
+    updateUserData,
+    profilePictureUpdate
 }

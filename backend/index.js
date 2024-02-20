@@ -18,6 +18,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+import path from 'path';
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/images',express.static(path.join(__dirname,'public','images')));
 
 // Router Config
 import adminRouter from "./routers/adminRouter.js";

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userAuth } from '../../features/user/useSlice';
 import validateData from './validate';
 import style from './login.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const INTIAL_STATE = {
     username:'',
@@ -17,9 +18,7 @@ const Login = () => {
     const [errors, setErrors] = useState(INTIAL_STATE);
     const { success, error, user, message } = useSelector((state) =>  state.user);
     const dispatch = useDispatch();
-    // console.log(success,error,user,message)
-    console.log(user)
-
+    const navigate = useNavigate();
    
     useEffect(() => {
         if(error){
@@ -28,8 +27,10 @@ const Login = () => {
                 ...error,
                 password:'password does not match!'
             })
+        }else if(success || user){
+            navigate('/profile',{replace:true})
         }
-    },[error])
+    },[error, success, user])
 
     const handleChange = (e) =>{
         const { name , value} = e.target;
@@ -47,10 +48,11 @@ const Login = () => {
         if(!isFormValid){
             toast.error('Enter Valid Data to Login !');
         }else{
-            console.log(loginData)
-            dispatch(userAuth(loginData))
+            dispatch(userAuth(loginData));
+
         }
     }
+
 
 
     return (
@@ -75,7 +77,7 @@ const Login = () => {
 
                             <button className={style.login_btn}>Login</button>
                         </form>
-                        <button className={style.signup_btn}>Create New Account</button>
+                        <button className={style.signup_btn} onClick={() => navigate('/register')}>Create New Account</button>
                     </div>
             </div>
         </div>

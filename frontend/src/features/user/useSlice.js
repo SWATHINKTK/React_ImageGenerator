@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { userLogin } from "../../api/userAPI";
+
+import { editUser, profilePictureUpdate, userLogin } from "../../api/userAPI";
+import { toast } from "react-toastify";
+
 
 const INITIAL_STATE = {
     user:null,
@@ -11,7 +14,7 @@ const INITIAL_STATE = {
 
 const checkUserExist = () => {
     const user = localStorage.getItem('userAuth');
-    INITIAL_STATE.user = user;
+    INITIAL_STATE.user = JSON.parse(user);
     return INITIAL_STATE
 }
 
@@ -29,11 +32,43 @@ export const userAuth = createAsyncThunk(
     }
 )
 
+export const updateDetails = createAsyncThunk(
+    'user/editprofile',
+    async(editUserData, { rejectWithValue }) => {
+        try {
+            return await editUser(editUserData);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
+
+export const changeProfilePicture = createAsyncThunk(
+    'user/updateProfilePicture',
+    async(profileImage, { rejectWithValue }) => {
+        try {
+            return await profilePictureUpdate(profileImage);
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
 
 const userSlice = createSlice({
     name:'user',
     initialState:checkUserExist(),
-    reducers:{},
+    reducers:{
+        deleteUserData : (state,action) => {
+            state.user = null;
+            state.success = null;
+        },
+        updateUserDetails : (state, action) => {
+            console.log(action)
+            state.user = action.payload.user;
+            localStorage.setItem('userAuth', JSON.stringify(action.payload.user))
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(userAuth.pending, (state) => {
             console.log('loading')
@@ -44,6 +79,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.success = true;
             state.error = false;
+            console.log(action.payload.u)
             state.user = action.payload.user;
             localStorage.setItem('userAuth',JSON.stringify(action.payload.user));
         });
@@ -54,8 +90,26 @@ const userSlice = createSlice({
             state.success = false;
             state.message = action.payload.message;
         })
+
+        builder.addCase(updateDetails.fulfilled , (state, action) => {
+            state.user = action.payload.user;
+            localStorage.setItem('userAuth',JSON.stringify(action.payload.user))
+            toast.success('Profile is Updated.');
+        })
+
+        builder.addCase(updateDetails.rejected, ( state, action ) => {
+            toast.error(action.payload.message);
+        })
+
+        builder.addCase(changeProfilePicture.fulfilled, (state, action) => {
+            state.user = action.payload.user;
+            localStorage.setItem('userAuth',JSON.stringify(action.payload.user))
+            toast.success('Profile is Updated.');
+        })
         
     }
 })
+
+export const { deleteUserData,updateUserDetails } = userSlice.actions;
 
 export default userSlice.reducer;

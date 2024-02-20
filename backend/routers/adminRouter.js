@@ -4,6 +4,7 @@ const adminRouter = express();
 import { 
     loginAdmin,
     addUser,
+    authorization,
     editUser,
     userDelete,
     logoutAdmin
@@ -11,6 +12,7 @@ import {
 
  adminRouter.post('/login',loginAdmin);
  adminRouter.post('/logout',logoutAdmin);
+ adminRouter.get('/authorization', authorization)
  adminRouter.post('/adduser',addUser);
  adminRouter.put('/edituser',editUser);
  adminRouter.delete('/deleteuser',userDelete);

@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { adminAuth } from '../../features/admin/adminSlice';
+
 
 import style from './admin.module.css';
-import { toast } from 'react-toastify';
 
 const INITIAL_STATE = {
     username:'',
@@ -11,7 +15,19 @@ const INITIAL_STATE = {
 const AdminLogin = () => {
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [errors, setErrors] = useState(INITIAL_STATE);
-    console.log()
+    const { admin, error, message } = useSelector((state) => state.admin);
+    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+        if(error){
+            toast.error(message);
+        }else if(admin){
+            console.log('sssfd')
+            navigate('/admin/dashboard')
+        }
+    },[error,admin])
 
     const handleChange = (e) => {
         const { name , value} = e.target;
@@ -20,21 +36,22 @@ const AdminLogin = () => {
             ...formData,
             [name]:value
         });
-        validateForm(name)
+        validateForm(name, value)
     }
+    console.log(formData)
 
 
-    const validateForm = (name) => {
+    const validateForm = (name, value) => {
         switch(name){
             case 'username' : setErrors({
                                 ...errors,
-                                [name]:formData[name].length < 4 || formData[name].trim() == '' ? '* Username must be at least 4 characters long!' : ''
+                                [name]:value  < 4 || value == '' ? '* Username must be at least 4 characters long!' : ''
 
                             });
                             break;
             case 'password' : setErrors({
                                 ...errors,
-                                [name]:formData[name].length < 5 || formData[name].trim() == '' ? '* password must be at least 5 characters long!' : ''
+                                [name]:value < 5 || value == '' ? '* password must be at least 5 characters long!' : ''
                             })
                             break;
 
@@ -43,11 +60,12 @@ const AdminLogin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isFormValid = Object.entries(errors).every(error => error == '' && username && password);
+        const isFormValid = Object.entries(errors).every(error =>  formData.username && formData.password);
+        console.log(isFormValid)
         if(!isFormValid){
             toast.error('Enter All Fields!')
         }else{
-            
+            dispatch(adminAuth(formData));
         }
     }
 

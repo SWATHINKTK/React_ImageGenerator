@@ -11,8 +11,11 @@ import PrivateRoutes from "./utils/PrivateRoutes.jsx"
 
 
 
+
+
 function App() {
 
+  
     return (
         <>
             <Router>
@@ -24,18 +27,10 @@ function App() {
                     <Route path="/login" element={<Login/>}></Route>
                     <Route path="/register" element={<Register/>}></Route>
                     <Route path="/admin/login" element={<AdminLogin/>}></Route>
+                    <Route path="/admin/dashboard" element={<AdminDashBoard/>}></Route>
+
                 </Routes>
             </Router>
-            {/* <Login/> */}
-
-            {/* <Register /> */}
-            {/* <Navbar/>
-            <UserProfile/> */}
-            {/* <AdminLogin/> */}
-            {/* <UserView></UserView> */}
-            {/* <AdminDashBoard /> */}
-            {/* <UserProfile/> */}
-            {/* <EditUser /> */}
 
         </>
     )
