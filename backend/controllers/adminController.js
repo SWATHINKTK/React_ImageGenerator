@@ -5,6 +5,14 @@ import 'dotenv/config';
 import adminModel from "../models/adminModel.js";
 import userModel from "../models/userModel.js";
 
+
+const passwordHash = async(password) => {
+    const salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password,salt);
+}
+
+
+
 const loginAdmin = async( req, res, next ) => {
     try {
         const { username, password } = req.body;
@@ -41,6 +49,7 @@ const loginAdmin = async( req, res, next ) => {
 
 const logoutAdmin = async( req, res, next ) => {
     try {
+        console.log('logOut')
         res.status(200).clearCookie('adminToken').json({message: 'Admin is Logged out.'});
     } catch (error) {
         next(error);
@@ -57,12 +66,25 @@ const authorization = async( req, res, next) => {
     }
 }
 
+const userDetails = async (req , res) => {
+    try {
+        const users = await userModel.find({});
+        if(users){
+            res.status(200).json({usersDetails:users});
+        }else{
+            throw new Error('Server Error');
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 const addUser = async( req, res, next ) => {
     try {
         const {firstname, lastname, email, phoneNumber, password } = req.body;
         
-        if( !(firstname, lastname, email, phoneNumber, password) ){
+        if( !(firstname && lastname && email && phoneNumber && password) ){
             res.status(400).json({success: false, message:"Must Required All Fields."});
         }
         
@@ -98,11 +120,11 @@ const addUser = async( req, res, next ) => {
 
 const editUser = async( req, res, next ) => {
     try {
+
         const {firstname, lastname, phoneNumber, userID} = req.body;
-        // const userID = req.user;
         
-        if( !(firstname, lastname, phoneNumber) ){
-            res.status(400).json({success: false, message:"Must Required All Fields."});
+        if( !(firstname && lastname && phoneNumber) ){
+           return res.status(400).json({success: false, message:"Must Required All Fields."});
         }
         
         const query = { _id: userID };
@@ -115,9 +137,12 @@ const editUser = async( req, res, next ) => {
             const error = new Error('User Not Found.');
             error.statusCode = 404;
             next(error); 
+        }else{
+            const user = await userModel.find({});
+            console.log(user)
+            res.json({status:true,user});
         }
      
-        res.json({status:true,user:userData});
     } catch (error) {
         next(error);
     }
@@ -127,14 +152,17 @@ const editUser = async( req, res, next ) => {
 
 const userDelete = async( req, res, next ) => {
     try {
-        const { userId } = req.body;
+        const { userId } = req.query;
+        console.log(userId)
 
         const deleteUser = await userModel.deleteOne({_id:userId});
         console.log(deleteUser)
         if(!deleteUser.deletedCount){
-            res.status(401).json({status:false, message:'User is Not Found.'})
+            return res.status(401).json({status:false, message:'User is Not Found.'})
+        }else{
+            const users = await userModel.find({});
+            res.status(200).json({status:false, message:'User is Deleted.',users});
         }
-        res.status(200).json({status:false, message:'User is Deleted.'});
 
     } catch (error) {
         next(error);
@@ -145,6 +173,7 @@ export {
     loginAdmin,
     logoutAdmin,
     authorization,
+    userDetails,
     addUser,
     editUser,
     userDelete

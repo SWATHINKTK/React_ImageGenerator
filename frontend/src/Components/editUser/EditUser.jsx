@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import validateRegister from '../register/validateRegister';
 import { updateDetails } from '../../features/user/useSlice';
 import './editUser.css';
+import axios from 'axios';
+import { usersDataUpdate } from '../../features/admin/adminSlice';
 
 const INTIAL_STATE = {
     firstname:'',
@@ -14,18 +16,20 @@ const INTIAL_STATE = {
     phoneNumber:''
 }
 
-const EditUser = ({setEditBtn}) => {
+const EditUser = ({user , setEditBtn , setIsOpen}) => {
 
-    const { user } = useSelector( (state) => state.user);
+    const { admin } = useSelector( (state) =>  state.admin)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [ editData, setEditData ] = useState({
                                                     firstname:user.firstname,
                                                     lastname:user.lastname,
-                                                    phoneNumber:user.phoneNumber
+                                                    phoneNumber:user.phoneNumber,
+                                                    userID:user._id
                                                 });
     const [ errors , setErrors ] = useState(INTIAL_STATE);
+
 
 
     const handleChange = (e) => {
@@ -37,6 +41,7 @@ const EditUser = ({setEditBtn}) => {
         validateRegister(name,value,errors,setErrors);
     }
 
+
     const handleEditUser = async(e) => {
         e.preventDefault();
 
@@ -45,10 +50,20 @@ const EditUser = ({setEditBtn}) => {
 
         try {
             if(isFormValid){
-                dispatch(updateDetails(editData));
-                setTimeout(() => {
-                    setEditBtn(false)
-                }, 2800);
+                if(admin){
+                    const response = await axios.put('/api/api/admin/edituser',editData);
+                    const data = response.data;
+                    dispatch(usersDataUpdate(data.user));
+                    toast.success('User Edit Successfully.');
+                    setTimeout(() => {
+                        setIsOpen(false)
+                    },2000)
+                }else{
+                    dispatch(updateDetails(editData));
+                    setTimeout(() => {
+                        setEditBtn(false)
+                    }, 2800);
+                }
             }else{
                 toast.error('Empty Field to Update is Not Possible')
             }
@@ -56,6 +71,7 @@ const EditUser = ({setEditBtn}) => {
             toast.error('Edit Failed Please Try Again.')
         }
     }
+
 
     return (
         <div className='edit-user'>
@@ -77,12 +93,14 @@ const EditUser = ({setEditBtn}) => {
                 Edit
             </button> 
 
-            <button onClick={() =>{ setEditBtn(false); navigate('/profile')}} class="cursor-pointer mt-4 rounded-[20px] font-semibold overflow-hidden relative z-100 border border-black  group px-8  w-11/12">
-                <span class="relative z-10 text-black group-hover:text-white text-xl duration-500">Back</span>
-                <span class="absolute w-11/12 h-full bg-black -left-36 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
-                <span class="absolute w-11/12 h-full bg-black -right-36 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
-            </button>
-
+            {
+                !admin &&
+                <button onClick={() =>{ setEditBtn(false); navigate('/profile')}} class="cursor-pointer mt-4 rounded-[20px] font-semibold overflow-hidden relative z-100 border border-black  group px-8  w-11/12">
+                    <span class="relative z-10 text-black group-hover:text-white text-xl duration-500">Back</span>
+                    <span class="absolute w-11/12 h-full bg-black -left-36 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
+                    <span class="absolute w-11/12 h-full bg-black -right-36 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
+                </button>
+            }
         </form>
         </div>
     )

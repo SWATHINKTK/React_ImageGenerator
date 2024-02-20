@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import { editUser, profilePictureUpdate, userLogin } from "../../api/userAPI";
 import { toast } from "react-toastify";
 

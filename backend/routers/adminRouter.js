@@ -5,6 +5,7 @@ import {
     loginAdmin,
     addUser,
     authorization,
+    userDetails,
     editUser,
     userDelete,
     logoutAdmin
@@ -12,6 +13,7 @@ import {
 
  adminRouter.post('/login',loginAdmin);
  adminRouter.post('/logout',logoutAdmin);
+ adminRouter.get('/usersdetails',userDetails);
  adminRouter.get('/authorization', authorization)
  adminRouter.post('/adduser',addUser);
  adminRouter.put('/edituser',editUser);

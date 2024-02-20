@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
     },
     profile:{
         type:String,
+        default:'1708351341803-user.png'
     },
     phoneNumber:{
         type:String,

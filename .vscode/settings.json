@@ -9,6 +9,7 @@
         "lastname",
         "phonenumber",
         "signup",
-        "toastify"
+        "toastify",
+        "usersdetails"
     ]
 }

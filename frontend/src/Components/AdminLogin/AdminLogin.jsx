@@ -16,7 +16,7 @@ const AdminLogin = () => {
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [errors, setErrors] = useState(INITIAL_STATE);
     const { admin, error, message } = useSelector((state) => state.admin);
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -24,7 +24,6 @@ const AdminLogin = () => {
         if(error){
             toast.error(message);
         }else if(admin){
-            console.log('sssfd')
             navigate('/admin/dashboard')
         }
     },[error,admin])

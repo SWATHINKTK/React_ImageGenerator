@@ -1,0 +1,33 @@
+.add-user input{
+    border: 0.7px solid #04040463;
+    border-radius: 4.5px;
+    padding: 4px 7px;
+    height: 30px;
+    margin: 2px 0;
+    font-size: 1.1rem;
+    background-color: #fff;
+}
+
+.adduser-input:focus{
+    outline: 2px solid #176b58; 
+}
+
+.error-input{
+    border: none;
+    outline: 1.4px solid #d63624; 
+}
+
+.adduser-label{
+    margin-top: 5px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.841);
+    font-size: 15px;
+}
+
+.adduser-error{
+    line-height: 0.7;
+    padding-left: 6px;
+    font-size: 14px;
+    color: #df1c1c;
+    letter-spacing: 0.8px;
+}
