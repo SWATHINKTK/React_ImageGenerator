@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { deleteUserData } from '../../features/user/useSlice';
-import { adminRemove } from '../../features/admin/adminSlice';
+import { adminRemove, usersDataUpdate } from '../../features/admin/adminSlice';
 import './navbar.css';
 
 
@@ -13,12 +13,21 @@ import './navbar.css';
 const Navbar = () => {
 
     const [ profileToggle, setProfileToggle ] = useState(true);
+    const [ search, setSearch ] = useState();
 
     const { user } = useSelector( (state) => state.user);
-    const { admin } = useSelector((state) => state.admin)
+    const { admin, users, tempUsers } = useSelector((state) => state.admin);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+
+    useEffect(() => {
+        const regex = new RegExp(search,'i');
+        const filtered = tempUsers.filter(user => 
+            regex.test(user.firstname) || regex.test(user.email)
+        );
+        dispatch(usersDataUpdate(filtered))
+    },[search])
     
 
     const handleToggler = () =>{
@@ -58,16 +67,30 @@ const Navbar = () => {
 
         }
     }
+
+
+    const searchHandle = (e) => {
+        setSearch(e.target.value);
+    }
     
     return (
         <div>
             <nav className="bg-white border-gray-200 navbar">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
                     <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="../../public/images/icon.png" className="h-10" alt="Flowbite Logo" />
+                        <img src="../../public/images/icon.png" className="h-10"  />
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">{ admin ? 'Admin' : 'User' }</span>
                     </a>
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                        {
+                            admin &&
+                            <div className="input-container">
+                                <input type="text" name="text" className="input" value={search} placeholder="search..." onChange={searchHandle}/>
+                                <span className="icon"> 
+                                    <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                                </span>
+                            </div>
+                        }
                         <button onClick={handleToggler} className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" >
                             <span className="sr-only">Open user menu</span>
                             <img className="w-8 h-8 rounded-full" src="/public/images/profile.png" alt="user photo" />
@@ -87,7 +110,7 @@ const Navbar = () => {
                                     <li onClick={() => navigate('/profile')}>
                                         <a href="#" className="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                             <svg className="w-6 h-6 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 5-1.5 4 4 0 0 0-4-3.5h-2a4 4 0 0 0-4 3.5 9 9 0 0 0 5 1.5Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 5-1.5 4 4 0 0 0-4-3.5h-2a4 4 0 0 0-4 3.5 9 9 0 0 0 5 1.5Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                             </svg>
                                             Profile
                                         </a>
@@ -106,7 +129,7 @@ const Navbar = () => {
                         <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
                             <span className="sr-only">Open main menu</span>
                             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
                             </svg>
                         </button>
                     </div>

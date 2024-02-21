@@ -5,6 +5,7 @@ import { adminLogin } from "../../api/adminAPI";
 const INITIAL_STATE = {
     admin: localStorage.getItem('adminAuth') || false,
     users:[],
+    tempUsers:[],
     loading:null,
     error:null,
     message:null,
@@ -33,6 +34,9 @@ const adminAuthSlice= createSlice({
         },
         usersDataUpdate : (state , action) => {
             state.users = action.payload;
+        },
+        temUserUpdate : (state, action) => {
+            state.tempUsers = action.payload;
         }
     },
     extraReducers:(builder) => {
@@ -51,6 +55,6 @@ const adminAuthSlice= createSlice({
 })
 
 
-export const { adminRemove, usersDataUpdate } = adminAuthSlice.actions;
+export const { adminRemove, usersDataUpdate, temUserUpdate } = adminAuthSlice.actions;
 
 export default adminAuthSlice.reducer;

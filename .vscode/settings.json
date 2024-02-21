@@ -8,8 +8,10 @@
         "INTIAL",
         "lastname",
         "phonenumber",
+        "reduxjs",
         "signup",
         "toastify",
-        "usersdetails"
+        "usersdetails",
+        "userview"
     ]
 }

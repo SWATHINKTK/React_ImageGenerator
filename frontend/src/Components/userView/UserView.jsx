@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { usersDataUpdate } from '../../features/admin/adminSlice';
+import { temUserUpdate, usersDataUpdate } from '../../features/admin/adminSlice';
 import CustomModal from '../Modal/CustomModal';
 import EditUser from '../editUser/EditUser';
 import style from './userview.module.css';
@@ -25,6 +25,8 @@ const UserView = () => {
         const fetchData = async() => {
             const response = await axios.get('/api/api/admin/usersdetails');
             dispatch(usersDataUpdate(response.data.usersDetails))
+            dispatch(temUserUpdate(response.data.usersDetails))
+           
         }
         fetchData();
     },[]);
@@ -69,7 +71,7 @@ const UserView = () => {
                 </CustomModal>
             </div>
 
-            <div class={style.user_table}>
+            <div className={style.user_table}>
                 <table className={style.table}>
                     <thead className={style.table_row_heading}>
                         <tr>
