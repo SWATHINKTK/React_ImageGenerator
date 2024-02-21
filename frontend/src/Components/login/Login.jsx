@@ -28,7 +28,7 @@ const Login = () => {
                 password:'password does not match!'
             })
         }else if(success || user){
-            navigate('/profile',{replace:true})
+            navigate('/',{replace:true})
         }
     },[error, success, user])
 

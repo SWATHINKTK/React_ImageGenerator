@@ -1,9 +1,16 @@
 import express from "express";
 import multer from "multer";
-import path from 'path';
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import axios from "axios";
+import 'dotenv/config';
+
+import OpenAI from 'openai';
+
+const configuration = {
+  apiKey: process.env.OPENAI_API_KEY,
+};
+
+const openai = new OpenAI(configuration);
+
 
 const userRouter = express();
 
@@ -40,12 +47,22 @@ userRouter.post('/logout', userAuthentication,logoutUser);
 userRouter.get('/profile', userAuthentication, getUserProfile);
 userRouter.put('/edituser', userAuthentication, updateUserData);
 userRouter.patch('/updateProfile',userAuthentication,upload.single('avatar'),profilePictureUpdate);
-userRouter.get('/imageget',(req,res) => {
-    res.json(URL.createObjectURL(path.join(__dirname, '..','public', 'images','1708343580252-swathin.jpg')));
-})
 
-userRouter.get('/user',(req,res) => {
-    res.json({'message':'user'})
+
+userRouter.post('/generateimage',async(req,res) => {
+    try {
+        const { prompt } = req.body;
+        const response = await openai.images.generate({
+            model: "dall-e-2",
+            prompt: prompt,
+            n: 1,
+            size: "1024x1024",
+          });
+          console.log(response.data)
+        res.status(200).json({url:response.data[0].url});
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
