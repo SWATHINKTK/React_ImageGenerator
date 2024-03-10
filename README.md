@@ -15,7 +15,6 @@ This repository hosts an AI-powered image generator application built with Node.
 - React
 - Tailwind CSS
 - JWT (JSON Web Tokens)
-- [Add any additional technologies/libraries used]
 
 ## Installation
 
